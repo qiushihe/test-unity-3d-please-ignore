@@ -1,28 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BootStrap : MonoBehaviour
-{
+public class BootStrap : MonoBehaviour {
   private Scene _mainScene;
   private GameObject _mainSceneScriptObject;
 
-  private void Awake()
-  {
+  private void Awake() {
     Debug.Log("BootStrap Awake!");
   }
 
   // Start is called before the first frame update
-  private void Start()
-  {
+  private void Start() {
     Debug.Log("BootStrap Start!");
 
-    _mainScene = SceneManager.CreateScene("Test Scene");
-    _mainSceneScriptObject = new GameObject("Test Scene Script");
-    _mainSceneScriptObject.AddComponent<MainScene>();
-    SceneManager.MoveGameObjectToScene(_mainSceneScriptObject, _mainScene);
-    SceneManager.SetActiveScene(_mainScene);
+    this._mainScene = SceneManager.CreateScene("Test Scene");
+    this._mainSceneScriptObject = new GameObject("Test Scene Script");
+    this._mainSceneScriptObject.AddComponent<MainScene>();
+    SceneManager.MoveGameObjectToScene(this._mainSceneScriptObject, this._mainScene);
+    SceneManager.SetActiveScene(this._mainScene);
   }
 
   // Update is called once per frame
-  private void Update() {}
+  private void Update() {
+  }
 }
