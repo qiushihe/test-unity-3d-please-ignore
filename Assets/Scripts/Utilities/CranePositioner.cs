@@ -4,11 +4,30 @@ namespace Utilities
 {
     public class CranePositioner
     {
+        // CranedObject refers to the object that's being craned around.
+        // For example, a "craned object" could be a camera that's being
+        // craned around another object.
         public readonly GameObject CranedObject;
+
+        // OriginObject refers to the object that the CranedObject is being
+        // craned around. For example, if a camera is being craned around a
+        // person, the person is the "origin object".
         public readonly GameObject OriginObject;
+
+        // The direct distance between CranedObject and OriginObject.
         public float CraneLength;
+
+        // HorizontalAngle is the angle of rotation around the vertical axis
+        // measured in degrees.
+        // For example: when looking side to side.
         public float HorizontalAngle;
+
+        // RotateCranedObject indicates if the local rotation of CranedObject
+        // should be updated so that CranedObject always points to OriginObject.
         public bool RotateCranedObject;
+
+        // VerticalAngle is the angle of rotation around the side-way, horizontal
+        // axis measured in degrees. For example: when looking up and down.
         public float VerticalAngle;
 
         public CranePositioner(GameObject originObject, GameObject cranedObject)

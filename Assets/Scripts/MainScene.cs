@@ -139,24 +139,6 @@ public class MainScene : MonoBehaviour
         _cubeObject.AddComponent<Rigidbody>();
     }
 
-    private void SetupCube2()
-    {
-        _cubeObject = new GameObject("Test Cube");
-        _cubeObject.transform.position = new Vector3(0, 1, 0);
-        _cubeObject.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);
-
-        var tmpGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        var meshFilter = _cubeObject.AddComponent<MeshFilter>();
-        meshFilter.mesh = tmpGameObject.GetComponent<MeshFilter>().sharedMesh;
-        var meshRenderer = _cubeObject.AddComponent<MeshRenderer>();
-        meshRenderer.material = Resources.Load<Material>("Materials/TestMat");
-        Destroy(tmpGameObject);
-
-        var cubeMeshCollider = _cubeObject.AddComponent<MeshCollider>();
-        cubeMeshCollider.convex = true;
-        _cubeObject.AddComponent<Rigidbody>();
-    }
-
     private struct PanningState
     {
         public bool IsPanning;
