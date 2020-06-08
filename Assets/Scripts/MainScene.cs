@@ -9,7 +9,9 @@ public class MainScene : MonoBehaviour
     private GameObject _directionalLightObject;
     private GameObject _discObject;
     private Color _lightColor;
+    private LookMaintainer _lookMaintainer;
     private PanningState _panningState;
+    private RotationSynchronizer _rotationSynchronizer;
 
     private void Awake()
     {
@@ -35,8 +37,16 @@ public class MainScene : MonoBehaviour
         {
             CraneLength = 6,
             HorizontalAngle = 180,
-            VerticalAngle = 30,
-            RotateCranedObject = true
+            VerticalAngle = 30
+        };
+
+        _lookMaintainer = new LookMaintainer(_cameraObject, _cubeObject);
+
+        _rotationSynchronizer = new RotationSynchronizer(_cubeObject, _cameraObject)
+        {
+            SynchronizeXAxis = false,
+            SynchronizeYAxis = true,
+            SynchronizeZAxis = false
         };
     }
 
@@ -67,13 +77,25 @@ public class MainScene : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _panningState.IsPanning = true;
+            _panningState.IsTurning = false;
+
+            _panningState.MouseOrigin = Input.mousePosition;
+            _panningState.CraneHorizontalAngle = _cranePositioner.HorizontalAngle;
+            _panningState.CraneVerticalAngle = _cranePositioner.VerticalAngle;
+            Cursor.visible = false;
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            _panningState.IsPanning = true;
+            _panningState.IsTurning = true;
+
             _panningState.MouseOrigin = Input.mousePosition;
             _panningState.CraneHorizontalAngle = _cranePositioner.HorizontalAngle;
             _panningState.CraneVerticalAngle = _cranePositioner.VerticalAngle;
             Cursor.visible = false;
         }
 
-        if (!Input.GetMouseButton(0))
+        if (!Input.GetMouseButton(0) && !Input.GetMouseButton(1))
         {
             _panningState.IsPanning = false;
             Cursor.visible = true;
@@ -87,6 +109,9 @@ public class MainScene : MonoBehaviour
         }
 
         _cranePositioner.UpdatePosition();
+        _lookMaintainer.UpdateLook();
+
+        if (_panningState.IsPanning && _panningState.IsTurning) _rotationSynchronizer.UpdateRotation();
     }
 
     private void SetupSkybox()
@@ -142,6 +167,7 @@ public class MainScene : MonoBehaviour
     private struct PanningState
     {
         public bool IsPanning;
+        public bool IsTurning;
         public Vector3 MouseOrigin;
         public float CraneHorizontalAngle;
         public float CraneVerticalAngle;

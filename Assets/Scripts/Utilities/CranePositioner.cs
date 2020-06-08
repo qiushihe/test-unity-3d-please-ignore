@@ -22,10 +22,6 @@ namespace Utilities
         // For example: when looking side to side.
         public float HorizontalAngle;
 
-        // RotateCranedObject indicates if the local rotation of CranedObject
-        // should be updated so that CranedObject always points to OriginObject.
-        public bool RotateCranedObject;
-
         // VerticalAngle is the angle of rotation around the side-way, horizontal
         // axis measured in degrees. For example: when looking up and down.
         public float VerticalAngle;
@@ -37,16 +33,12 @@ namespace Utilities
             CraneLength = 0;
             HorizontalAngle = 0;
             VerticalAngle = 0;
-            RotateCranedObject = false;
         }
 
         public void UpdatePosition()
         {
             CranedObject.transform.position = GetCranedPosition(OriginObject.transform.position, CraneLength,
                 VerticalAngle, HorizontalAngle);
-
-            if (RotateCranedObject)
-                CranedObject.transform.LookAt(OriginObject.transform.position);
         }
 
         public static Vector3 GetCranedPosition(Vector3 origin, float distance, float vAngle, float hAngle)
