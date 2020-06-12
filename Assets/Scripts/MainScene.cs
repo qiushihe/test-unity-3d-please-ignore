@@ -12,6 +12,7 @@ public class MainScene : MonoBehaviour
     private LookMaintainer _lookMaintainer;
     private PanningState _panningState;
     private RotationSynchronizer _rotationSynchronizer;
+    private RotationLocker _rotationLocker;
 
     private void Awake()
     {
@@ -47,6 +48,13 @@ public class MainScene : MonoBehaviour
             SynchronizeXAxis = false,
             SynchronizeYAxis = true,
             SynchronizeZAxis = false
+        };
+
+        _rotationLocker = new RotationLocker(_cubeObject)
+        {
+            LockXAxis = true,
+            LockYAxis = false,
+            LockZAxis = true
         };
     }
 
@@ -107,11 +115,15 @@ public class MainScene : MonoBehaviour
             _cranePositioner.HorizontalAngle = _panningState.CraneHorizontalAngle + mouseMovement.x;
             _cranePositioner.VerticalAngle = _panningState.CraneVerticalAngle - mouseMovement.y;
         }
+        
+        _cranePositioner.CraneLength += -1 * Input.mouseScrollDelta.y;
 
         _cranePositioner.UpdatePosition();
         _lookMaintainer.UpdateLook();
 
         if (_panningState.IsPanning && _panningState.IsTurning) _rotationSynchronizer.UpdateRotation();
+        
+        _rotationLocker.UpdateRotation();
     }
 
     private void SetupSkybox()

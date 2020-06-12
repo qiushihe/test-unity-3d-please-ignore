@@ -7,7 +7,7 @@ namespace Utilities
         // ReferenceObject refers to the object whose rotation properties will be synchronized from.
         public readonly GameObject ReferenceObject;
 
-        // TargetObject regers to the object who will receive rotation properties from ReferenceObject.
+        // TargetObject refers to the object who will receive rotation properties from ReferenceObject.
         public readonly GameObject TargetObject;
 
         // SynchronizeXAxis indicates if x-axis rotation should be synchronized or not.
